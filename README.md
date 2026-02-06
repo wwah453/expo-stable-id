@@ -151,6 +151,40 @@ setWillChangeHandler((currentId, candidateId) => {
 });
 ```
 
+### Real-World Example: Shared ID for PostHog + RevenueCat
+
+Use the same stable ID across your analytics and payment provider so user events are always linked:
+
+```tsx
+import { StableIdProvider, useStableId } from '@nauverse/expo-stable-id';
+import PostHog from 'posthog-react-native';
+import Purchases from 'react-native-purchases';
+import { useEffect } from 'react';
+
+function App() {
+  return (
+    <StableIdProvider>
+      <IdentifyProviders />
+      {/* rest of your app */}
+    </StableIdProvider>
+  );
+}
+
+function IdentifyProviders() {
+  const [id] = useStableId();
+
+  useEffect(() => {
+    if (!id) return;
+
+    // Same ID in both services
+    PostHog.identify(id);
+    Purchases.logIn(id);
+  }, [id]);
+
+  return null;
+}
+```
+
 ## ID Generators
 
 | Generator | Output | Example |

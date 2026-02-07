@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/TheNaubit/expo-stable-id/compare/v1.0.2...v1.0.3) (2026-02-07)
+
+
+### Bug Fixes
+
+* use expo-crypto instead of global crypto for React Native compatibility ([ce48ab7](https://github.com/TheNaubit/expo-stable-id/commit/ce48ab738743ed3cd9a9157aa024c2d56c8e3bc7))
+
 ## [1.0.2](https://github.com/TheNaubit/expo-stable-id/compare/v1.0.1...v1.0.2) (2026-02-07)
 
 

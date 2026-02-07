@@ -1,3 +1,18 @@
+# [2.0.0](https://github.com/TheNaubit/expo-stable-id/compare/v1.0.3...v2.0.0) (2026-02-07)
+
+
+### Features
+
+* remove App Transaction ID feature and convert to pure JS module ([4de9584](https://github.com/TheNaubit/expo-stable-id/commit/4de95844614a20f7debb5b0f6ab1dc14aabe36f7))
+
+
+### BREAKING CHANGES
+
+* fetchAppTransactionId, useAppTransactionId, and
+AppTransactionIdResult have been removed. Use expo-app-integrity
+instead for app verification needs. Native modules (ios/, android/)
+and expo-module.config.json have been removed.
+
 ## [1.0.3](https://github.com/TheNaubit/expo-stable-id/compare/v1.0.2...v1.0.3) (2026-02-07)
 
 

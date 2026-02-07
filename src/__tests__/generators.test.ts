@@ -1,5 +1,11 @@
 import { StandardGenerator, ShortIDGenerator } from '../generators/IDGenerator';
 
+// Mock expo-crypto with real crypto implementations for test environment
+jest.mock('expo-crypto', () => ({
+  randomUUID: () => require('crypto').randomUUID(),
+  getRandomValues: (array: Uint8Array) => require('crypto').getRandomValues(array),
+}));
+
 describe('StandardGenerator', () => {
   const generator = new StandardGenerator();
 

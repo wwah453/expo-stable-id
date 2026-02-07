@@ -18,7 +18,7 @@ The ID is generated once and persisted to both storages. On subsequent launches,
 ## Installation
 
 ```bash
-npx expo install @nauverse/expo-stable-id @nauverse/expo-cloud-settings expo-secure-store
+npx expo install @nauverse/expo-stable-id @nauverse/expo-cloud-settings expo-secure-store expo-crypto
 ```
 
 ### Config Plugin

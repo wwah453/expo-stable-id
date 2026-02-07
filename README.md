@@ -45,6 +45,8 @@ export default {
 
 ### React Hooks (Recommended)
 
+> **Note:** `StableIdProvider` does **not** require `CloudSettingsProvider` from `@nauverse/expo-cloud-settings` as an ancestor. Internally it uses the functional API (`getString`, `setString`, `addChangeListener`) which talks directly to the native module. If your app also uses `CloudSettingsProvider` for its own React hooks (`useCloudSetting*`), both providers are independent and can be placed in any order.
+
 ```tsx
 import { StableIdProvider, useStableId, useAppTransactionId } from '@nauverse/expo-stable-id';
 

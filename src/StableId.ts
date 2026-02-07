@@ -1,6 +1,5 @@
 import type { StableIdChangeEvent, StableIdConfig } from './StableId.types';
 import { StableIdStore } from './StableIdStore';
-import ExpoStableIdModule from './ExpoStableIdModule';
 
 let store: StableIdStore | null = null;
 let configurePromise: Promise<string> | null = null;
@@ -38,10 +37,6 @@ export function identify(id: string): void {
 
 export function generateNewId(): string {
   return getStore().generateNewId();
-}
-
-export async function fetchAppTransactionId(): Promise<string | null> {
-  return ExpoStableIdModule.fetchAppTransactionId();
 }
 
 export function isConfigured(): boolean {

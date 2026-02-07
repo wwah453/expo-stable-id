@@ -4,12 +4,10 @@ import { Button, StyleSheet, Text, View } from 'react-native';
 import {
   StableIdProvider,
   useStableId,
-  useAppTransactionId,
 } from '@nauverse/expo-stable-id';
 
 function StableIdDemo() {
   const [id, { identify, generateNewId }] = useStableId();
-  const { id: txnId, loading: txnLoading, refetch: refetchTxn } = useAppTransactionId();
 
   return (
     <View style={styles.container}>
@@ -32,12 +30,6 @@ function StableIdDemo() {
           }}
         />
       </View>
-
-      <Text style={styles.label}>App Transaction ID:</Text>
-      <Text style={styles.value}>
-        {txnLoading ? 'Loading...' : txnId ?? 'Not available'}
-      </Text>
-      <Button title="Refetch Transaction" onPress={refetchTxn} />
     </View>
   );
 }

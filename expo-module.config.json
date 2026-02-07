@@ -1,9 +1,0 @@
-{
-  "platforms": ["apple", "android"],
-  "apple": {
-    "modules": ["StableIdModule"]
-  },
-  "android": {
-    "modules": ["expo.modules.stableid.StableIdModule"]
-  }
-}

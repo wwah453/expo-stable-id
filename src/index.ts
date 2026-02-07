@@ -17,7 +17,6 @@ export {
   getId,
   identify,
   generateNewId,
-  fetchAppTransactionId,
   isConfigured,
   hasStoredId,
   addChangeListener,
@@ -27,5 +26,5 @@ export {
 // React API
 export { StableIdProvider } from './StableIdProvider';
 export type { StableIdProviderProps } from './StableIdProvider';
-export { useStableId, useAppTransactionId } from './useStableId';
-export type { StableIdActions, AppTransactionIdResult } from './useStableId';
+export { useStableId } from './useStableId';
+export type { StableIdActions } from './useStableId';

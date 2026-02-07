@@ -17,16 +17,6 @@ jest.mock('expo-secure-store', () => ({
   }),
 }));
 
-jest.mock('../ExpoStableIdModule', () => ({
-  __esModule: true,
-  default: {
-    fetchAppTransactionId: jest.fn(() => Promise.resolve('txn-123')),
-  },
-}));
-
-import ExpoStableIdModule from '../ExpoStableIdModule';
-const mockFetchAppTransactionId = ExpoStableIdModule.fetchAppTransactionId as jest.Mock;
-
 jest.mock('../generators/IDGenerator', () => {
   let mockCounter = 0;
   return {
@@ -42,7 +32,6 @@ import {
   getId,
   identify,
   generateNewId,
-  fetchAppTransactionId,
   isConfigured,
   hasStoredId,
   addChangeListener,
@@ -116,14 +105,6 @@ describe('StableId functional API', () => {
 
     test('throws before configure', () => {
       expect(() => generateNewId()).toThrow('call configure()');
-    });
-  });
-
-  describe('fetchAppTransactionId', () => {
-    test('calls native module', async () => {
-      const result = await fetchAppTransactionId();
-      expect(result).toBe('txn-123');
-      expect(mockFetchAppTransactionId).toHaveBeenCalled();
     });
   });
 

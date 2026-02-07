@@ -45,10 +45,10 @@ export default {
 
 ### React Hooks (Recommended)
 
-> **Note:** `StableIdProvider` does **not** require `CloudSettingsProvider` from `@nauverse/expo-cloud-settings` as an ancestor. Internally it uses the functional API (`getString`, `setString`, `addChangeListener`) which talks directly to the native module. If your app also uses `CloudSettingsProvider` for its own React hooks (`useCloudSetting*`), both providers are independent and can be placed in any order.
+> **Note:** `StableIdProvider` does **not** require `CloudSettingsProvider` from `@nauverse/expo-cloud-settings` as an ancestor. Internally it uses the functional API (`getString`, `setString`, `addChangeListener`) from `@nauverse/expo-cloud-settings` directly. If your app also uses `CloudSettingsProvider` for its own React hooks (`useCloudSetting*`), both providers are independent and can be placed in any order.
 
 ```tsx
-import { StableIdProvider, useStableId, useAppTransactionId } from '@nauverse/expo-stable-id';
+import { StableIdProvider, useStableId } from '@nauverse/expo-stable-id';
 
 function App() {
   return (
@@ -86,19 +86,6 @@ import { StandardGenerator, ShortIDGenerator } from '@nauverse/expo-stable-id';
 <StableIdProvider config={{ id: 'fallback-id', policy: 'preferStored' }}>
 ```
 
-#### AppTransaction Hook
-
-```tsx
-function TransactionInfo() {
-  const { id, loading, error, refetch } = useAppTransactionId();
-
-  if (loading) return <Text>Loading...</Text>;
-  if (error) return <Text>Error: {error.message}</Text>;
-
-  return <Text>App Transaction: {id ?? 'N/A'}</Text>;
-}
-```
-
 ### Functional API
 
 ```ts
@@ -107,7 +94,6 @@ import {
   getId,
   identify,
   generateNewId,
-  fetchAppTransactionId,
   isConfigured,
   hasStoredId,
   addChangeListener,
@@ -136,9 +122,6 @@ const newId = generateNewId();
 // Check state
 isConfigured(); // boolean
 await hasStoredId(); // boolean
-
-// StoreKit App Transaction (iOS 16+ only)
-const txnId = await fetchAppTransactionId(); // null on Android
 
 // Listen for changes
 const subscription = addChangeListener((event) => {
@@ -217,7 +200,6 @@ const myGenerator: IDGenerator = {
 |---------|-----|---------|
 | Local storage (Keychain/Keystore) | Yes | Yes |
 | Cloud sync (iCloud KVS) | Yes | Coming soon |
-| App Transaction ID (StoreKit) | iOS 16+ | Returns `null` |
 | ID generation | Yes | Yes |
 
 ## API Reference
@@ -230,7 +212,6 @@ const myGenerator: IDGenerator = {
 | `getId()` | `string \| null` | Current cached ID (sync) |
 | `identify(id)` | `void` | Set a specific ID |
 | `generateNewId()` | `string` | Generate and persist a new ID |
-| `fetchAppTransactionId()` | `Promise<string \| null>` | StoreKit App Transaction (iOS 16+, null on Android) |
 | `isConfigured()` | `boolean` | Whether `configure()` has been called |
 | `hasStoredId()` | `Promise<boolean>` | Whether an ID exists in storage |
 | `addChangeListener(cb)` | `{ remove: () => void }` | Subscribe to ID changes |
@@ -242,7 +223,6 @@ const myGenerator: IDGenerator = {
 |--------|-------------|
 | `StableIdProvider` | Context provider, call `configure()` internally |
 | `useStableId()` | `[id, { identify, generateNewId }]` |
-| `useAppTransactionId()` | `{ id, loading, error, refetch }` |
 
 ### Types
 
@@ -277,7 +257,6 @@ interface StableIdChangeEvent {
 | `StableID.generateNewID()` | `generateNewId()` | Uses configured generator |
 | `StableID.isConfigured` | `isConfigured()` | Static check |
 | `StableID.hasStoredID` | `hasStoredId()` | Checks both storages |
-| `StableID.fetchAppTransactionID()` | `fetchAppTransactionId()` | StoreKit (iOS 16+) |
 | `StableID.set(delegate:)` | `addChangeListener()` + `setWillChangeHandler()` | JS-idiomatic |
 | `StandardGenerator` | `StandardGenerator` | UUID v4 |
 | `ShortIDGenerator` | `ShortIDGenerator` | 8-char alphanumeric |

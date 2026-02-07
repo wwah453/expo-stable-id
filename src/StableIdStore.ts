@@ -1,4 +1,6 @@
-import type { EventSubscription } from 'expo-modules-core';
+interface Subscription {
+  remove: () => void;
+}
 
 import {
   getString as cloudGetString,
@@ -33,7 +35,7 @@ export class StableIdStore {
   private willChangeHandler: WillChangeHandler | null = null;
   private changeListeners = new Set<ChangeCallback>();
   private storeListeners = new Set<Listener>();
-  private cloudSubscription: EventSubscription | null = null;
+  private cloudSubscription: Subscription | null = null;
 
   private async readStored(): Promise<string | null> {
     try {
@@ -139,7 +141,7 @@ export class StableIdStore {
       return;
     }
 
-    if (cloudValue === null || cloudValue === this.id) {
+    if (cloudValue === null || cloudValue.trim().length === 0 || cloudValue === this.id) {
       return;
     }
 

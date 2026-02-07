@@ -42,18 +42,8 @@ jest.mock('../generators/IDGenerator', () => {
   };
 });
 
-jest.mock('../ExpoStableIdModule', () => ({
-  __esModule: true,
-  default: {
-    fetchAppTransactionId: jest.fn(() => Promise.resolve('txn-abc')),
-  },
-}));
-
-import ExpoStableIdModule from '../ExpoStableIdModule';
-const mockFetchAppTransactionId = ExpoStableIdModule.fetchAppTransactionId as jest.Mock;
-
 import { StableIdProvider } from '../StableIdProvider';
-import { useStableId, useAppTransactionId } from '../useStableId';
+import { useStableId } from '../useStableId';
 
 const originalConsoleError = console.error;
 beforeAll(() => {
@@ -190,93 +180,3 @@ describe('useStableId', () => {
   });
 });
 
-describe('useAppTransactionId', () => {
-  test('starts in loading state', () => {
-    const results: { current: ReturnType<typeof useAppTransactionId> } = {
-      current: undefined as any,
-    };
-    function TestComponent() {
-      results.current = useAppTransactionId();
-      return null;
-    }
-    TestRenderer.act(() => {
-      TestRenderer.create(React.createElement(TestComponent));
-    });
-
-    expect(results.current.loading).toBe(true);
-    expect(results.current.id).toBeNull();
-  });
-
-  test('resolves with transaction id', async () => {
-    const results: { current: ReturnType<typeof useAppTransactionId> } = {
-      current: undefined as any,
-    };
-    function TestComponent() {
-      results.current = useAppTransactionId();
-      return null;
-    }
-    TestRenderer.act(() => {
-      TestRenderer.create(React.createElement(TestComponent));
-    });
-
-    await TestRenderer.act(async () => {
-      await new Promise((resolve) => setTimeout(resolve, 0));
-    });
-
-    expect(results.current.loading).toBe(false);
-    expect(results.current.id).toBe('txn-abc');
-    expect(results.current.error).toBeNull();
-  });
-
-  test('handles error', async () => {
-    mockFetchAppTransactionId.mockRejectedValueOnce(new Error('StoreKit failed'));
-
-    const results: { current: ReturnType<typeof useAppTransactionId> } = {
-      current: undefined as any,
-    };
-    function TestComponent() {
-      results.current = useAppTransactionId();
-      return null;
-    }
-    TestRenderer.act(() => {
-      TestRenderer.create(React.createElement(TestComponent));
-    });
-
-    await TestRenderer.act(async () => {
-      await new Promise((resolve) => setTimeout(resolve, 0));
-    });
-
-    expect(results.current.loading).toBe(false);
-    expect(results.current.id).toBeNull();
-    expect(results.current.error).toBeInstanceOf(Error);
-    expect(results.current.error!.message).toBe('StoreKit failed');
-  });
-
-  test('refetch re-fetches the value', async () => {
-    const results: { current: ReturnType<typeof useAppTransactionId> } = {
-      current: undefined as any,
-    };
-    function TestComponent() {
-      results.current = useAppTransactionId();
-      return null;
-    }
-    TestRenderer.act(() => {
-      TestRenderer.create(React.createElement(TestComponent));
-    });
-
-    await TestRenderer.act(async () => {
-      await new Promise((resolve) => setTimeout(resolve, 0));
-    });
-
-    expect(mockFetchAppTransactionId).toHaveBeenCalledTimes(1);
-
-    mockFetchAppTransactionId.mockResolvedValueOnce('txn-updated');
-    await TestRenderer.act(async () => {
-      results.current.refetch();
-      await new Promise((resolve) => setTimeout(resolve, 0));
-    });
-
-    expect(mockFetchAppTransactionId).toHaveBeenCalledTimes(2);
-    expect(results.current.id).toBe('txn-updated');
-  });
-});

